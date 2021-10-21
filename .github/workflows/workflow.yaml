@@ -27,7 +27,7 @@ jobs:
           aws-region: us-east-2
       # Step 5
       - name: Build Application and Run unit Test
-        run: nohup python3 manage.py runserver 0.0.0.0:5000 &
+        run: nohup python3 manage.py runserver 0.0.0.0:7000 &
 
   continuous-deployment:
     runs-on: ubuntu-latest
