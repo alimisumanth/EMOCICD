@@ -47,6 +47,6 @@ jobs:
         run: |
           aws deploy create-deployment \
             --application-name EMO \
-            --deployment-group-name EMO_APP_DEPLOYMENT \
+            --deployment-group-name development_group \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
