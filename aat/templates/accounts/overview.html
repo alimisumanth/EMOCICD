@@ -1,0 +1,150 @@
+{% load static %}
+<html>
+<head>
+	<title>KPI</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+<style>
+    .container{
+        width: 100%;
+    }
+    .img1{
+        width: 600px;
+        height: 500px;
+    }
+        .img2{
+        width: 1400px;
+            height: 500px;
+    }
+</style>
+    <script>
+      window.onload = function() {
+        let prices = {"Performance":[{value:1,desc:"Trips"},{value:2,desc:"Tonnage"}],
+             "Operational":[{value:2,desc:"Average Load Time"},{value:3,desc:"Average Tonnage"},{value:4,desc:"Total wagons"}],
+             "Product":[{value:1,desc:"Glycol Shipping"},{value:2,desc:'Robot Time'}],
+             }
+
+          document.getElementsByName('kpis')[0].addEventListener('change', function(e) {
+          document.getElementsByName('subkpis')[0].innerHTML = prices[this.value].reduce((acc, elem) => `${acc}<option value="${elem.value}">${elem.desc}</option>`, "");
+        });
+      }
+    </script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script language = "JavaScript">
+        	google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+				 function drawChart() {
+						// Define the chart to be drawn.
+						var data = google.visualization.arrayToDataTable({{ barchart_util|safe }});
+
+						var options = {title: 'Weekly Machine Performance for {{value}}',
+						vAxis: { title: '{{ units }}',titleTextStyle : {bold: 'true'} },
+                             hAxis: {title: "Days",titleTextStyle : {bold: 'true'}}};
+
+
+						// Instantiate and draw the chart.
+						var chart = new google.visualization.ColumnChart(document.getElementById('curve_chart1'));
+						chart.draw(data, options);
+				 }
+				 google.charts.setOnLoadCallback(drawChart);
+	</script>
+	<script language = "JavaScript">
+				 function drawChart() {
+						// Define the chart to be drawn.
+						var data = google.visualization.arrayToDataTable({{barchart_util1|safe}});
+
+						var options = {title: 'Hourly Machine Performance for {{value}}',
+						vAxis: { title: '{{ units }}',titleTextStyle : {bold: 'true'}},
+                             hAxis: {title: "Hours",titleTextStyle : {bold: 'true'}}};
+
+						// Instantiate and draw the chart.
+						var chart = new google.visualization.ColumnChart(document.getElementById('container'));
+						chart.draw(data, options);
+				 }
+				 google.charts.setOnLoadCallback(drawChart);
+	</script>
+</head>
+
+<body>
+  {%  include 'accounts/navbar.html' %}
+  <div class="container-fluid">
+    {% block content %}
+
+	   {% endblock %}
+  </div>
+<div>
+         <h1>Metrics </h1><br><br>
+<form name="form1" id="form1" method="post" action="{% url 'overview' %}">
+    {% csrf_token %}
+    <label> OKR
+        <select name="kpis" required>
+            <option value="">Select Value</option>
+            <option value="Performance">Performance</option>
+            <option value="Operational">Operational</option>
+           <option value="Product">Product</option>
+        </select>
+    </label>&nbsp;&nbsp;
+    <label>KPI
+        <select name="subkpis" required>
+            <option value="">Select Value</option>
+            <option value="Trips">Trips</option>
+            <option value="Tonnage">Tonnage</option>
+            <option value="Delay">Delay</option>
+            <option value="Glycol specific reports">Glycol Shipping</option>
+        </select>
+    </label><br>
+    <input type="submit" value="Select" style="margin-left: 140px">
+</form>
+  </div>
+  <div class="container" style="width:100%">
+		<div  id="curve_chart1" ></div>
+</div>
+<br> <br>
+  <div>
+     <div >
+{% if name2 %}
+  <img src=" {{ name2 }} " class="img2">
+{% endif %}
+  </div><br><br>
+  <div  style="display: inline-block; width: 49%;margin-left: 20px">
+{% if name %}
+  <img src=" {{ name }} " class="img1">
+{% endif %}
+  </div>
+  <div  style="display: inline-block; width: 49%">
+{% if name1 %}
+  <img src=" {{ name1 }} " class="img1">
+{% endif %}
+  </div>
+  </div>
+    <div>
+{% if glycol1 %}
+  <img src=" {{ glycol1 }} ">
+{% endif %}
+  </div><br>
+  <div>
+{% if glycol %}
+  <img src=" {{ glycol }} ">
+{% endif %}
+  </div><br>
+
+    <div>
+{% if avgrt %}
+  <img src=" {{ avgrt }} " >
+{% endif %}
+  </div><br>
+    <div>
+{% if avgrd %}
+  <img src=" {{ avgrd }} " >
+{% endif %}
+  </div>
+
+<div class="container" style="width:100%;">
+		<div id = "container" ></div>
+
+</div>
+ <br> <br><br>
+  {%  include 'accounts/footer.html' %}
+
+</body>
+</html>
