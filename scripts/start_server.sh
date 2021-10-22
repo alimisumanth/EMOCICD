@@ -2,12 +2,12 @@
 cd /home/ec2-user/EMOCICD/
 source environment/bin/activate
  {
-
+   sudo pip3 install -r requirements.txt
 # collecting static files
-python manage.py collectstatic --noinput;
+sudo python3 manage.py collectstatic --noinput;
 # log which migrations have already been applied
-python manage.py showmigrations;
+sudo python3 manage.py showmigrations;
 # migrate the rest
-python manage.py migrate --noinput;
+sudo python3 manage.py migrate --noinput;
 # another command to create a superuser (write your own)
 }
