@@ -2,7 +2,8 @@
 cd /home/ec2-user/EMOCICD/
 source environment/bin/activate
  {
-   sudo pip3 install -r requirements.txt
+  cd ~ && wget https://www.sqlite.org/2020/sqlite-autoconf-3320100.tar.gz && tar xvfz sqlite-autoconf-3320100.tar.gz && cd sqlite-autoconf-3320100 && ./configure && make && make install
+sudo pip3 install -r requirements.txt
 # collecting static files
 sudo python3 manage.py collectstatic --noinput;
 # log which migrations have already been applied
