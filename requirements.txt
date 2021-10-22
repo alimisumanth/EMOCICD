@@ -1,6 +1,6 @@
 pandas
 openpyxl
 numpy
-django
+django==2.2
 seaborn
 gunicorn
