@@ -1,0 +1,1 @@
+web: gunicorn aat.wsgi --log-file -
