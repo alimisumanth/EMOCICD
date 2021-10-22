@@ -211,7 +211,6 @@ def fileupload(request):
         with default_storage.open('uploads/' + excel_file.name, 'wb+') as destination:
             for chunk in excel_file.chunks():
                 destination.write(chunk)
-
         # file_name = default_storage.save('temp.csv', excel_file)
         # file_url = default_storage.url(file_name)
         column_data = pd.read_excel('uploads/' + excel_file.name)
