@@ -1,1 +1,1 @@
-web: gunicorn aat.wsgi --log-file -
+web: gunicorn CAS.wsgi --log-file -
